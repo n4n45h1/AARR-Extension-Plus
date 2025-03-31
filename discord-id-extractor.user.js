@@ -504,8 +504,8 @@
                     }
                     parent = parent.parentElement;
                 }
-
-                const listItem = createListItem(userId, userName, 'user');
+                
+                const listItem = createListItem(userId, null, 'user');
                 userList.list.appendChild(listItem);
 
                 extractedData.users.set(userId, {
@@ -542,16 +542,18 @@
 
         const idSpan = document.createElement('span');
         idSpan.textContent = id;
-        idSpan.style.color = '#72767d';
-        idSpan.style.fontSize = '10px';
+        idSpan.style.color = type === 'user' ? '#dcddde' : '#72767d';
+        idSpan.style.fontSize = type === 'user' ? '12px' : '10px';
         textContainer.appendChild(idSpan);
 
-        textContainer.appendChild(document.createTextNode(' '));
-
-        const nameSpan = document.createElement('span');
-        nameSpan.textContent = name;
-        nameSpan.style.color = '#dcddde';
-        textContainer.appendChild(nameSpan);
+        if (type === 'channel' && name) {
+            textContainer.appendChild(document.createTextNode(' '));
+            
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = name;
+            nameSpan.style.color = '#dcddde';
+            textContainer.appendChild(nameSpan);
+        }
 
         const copyButton = document.createElement('button');
         copyButton.textContent = 'Copy';
@@ -592,10 +594,8 @@
                 return;
         }
 
-        const formattedData = Array.from(dataMap.entries())
-            .map(([id, data]) => `${id} - ${data.name}`)
-            .join('\n');
-
+        const formattedData = Array.from(dataMap.keys()).join(' ');
+        
         if (formattedData) {
             navigator.clipboard.writeText(formattedData).then(() => {
                 console.log(`All ${type} IDs copied to clipboard!`);
