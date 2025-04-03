@@ -7,7 +7,7 @@
 // @match        https://discord.com/*
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @license     You can modify as long as you credit me
+// @license     AARR
 // ==/UserScript==
 
 (function() {
